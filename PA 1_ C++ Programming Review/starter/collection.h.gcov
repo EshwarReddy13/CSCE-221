@@ -1,0 +1,121 @@
+        -:    0:Source:collection.h
+        -:    0:Graph:collection_tests.gcno
+        -:    0:Data:-
+        -:    0:Runs:0
+        -:    1:#pragma once
+        -:    2:
+        -:    3:#include <cstddef>
+        -:    4:#include <iostream>
+        -:    5:using namespace std;
+        -:    6:
+        -:    7:template <typename Object>
+        -:    8:class Collection {
+        -:    9:    // TODO(student): the rest of the template
+        -:   10:    public:
+        -:   11:        size_t cap;
+        -:   12:        size_t siz;
+        -:   13:        Object* list;
+        -:   14:        bool empty;
+        -:   15:
+    #####:   16:        Collection():cap(10),siz(0),list(nullptr),empty(false){list = new Object[cap];}
+        -:   17:        
+    #####:   18:        void insert(const Object& obj){
+    #####:   19:            if(empty == true){
+    #####:   20:                cap = 10;
+        -:   21:            }
+    #####:   22:            if(siz == cap){
+    #####:   23:                cap *= 2;
+    #####:   24:                Object *temp = new Object[cap];
+    #####:   25:                for(size_t i = 0; i < siz; i++){
+    #####:   26:                    temp[i] = list[i];
+        -:   27:                }
+    #####:   28:                delete[] list;
+    #####:   29:                list = temp;
+        -:   30:            }
+    #####:   31:            list[siz] = obj;
+    #####:   32:            siz++;
+    #####:   33:        }
+        -:   34:
+    #####:   35:        void print(){
+    #####:   36:            for(size_t i=0;i<cap;i++){
+    #####:   37:                cout << list[i] << " ";
+        -:   38:            }
+    #####:   39:        }
+        -:   40:
+    #####:   41:        bool is_empty() const{
+    #####:   42:            if(siz==0){
+    #####:   43:                return true;
+        -:   44:            }
+    #####:   45:            return false;
+        -:   46:        };
+    #####:   47:        void make_empty(){
+    #####:   48:            if(siz==0){
+    #####:   49:                return;
+        -:   50:            }
+    #####:   51:            for(size_t i=0;i<cap;i++){
+    #####:   52:                list[i] =0;
+        -:   53:            }
+    #####:   54:            siz =0;
+    #####:   55:            cap = 0;
+    #####:   56:            empty = true;
+        -:   57:        };
+        -:   58:
+    #####:   59:        void remove(const Object& obj){
+        -:   60:            int i;
+    #####:   61:            bool val = false;
+    #####:   62:            for(size_t j = 0; j < siz; j++){
+    #####:   63:                if(list[j] == obj){
+    #####:   64:                    val = true;
+    #####:   65:                    i = j;
+    #####:   66:                    break;
+        -:   67:                }
+        -:   68:            }
+    #####:   69:            if(val){
+    #####:   70:                for(size_t j = i; j < siz - 1; j++){
+    #####:   71:                    list[j] = list[j + 1];
+        -:   72:                }
+    #####:   73:                siz--;
+        -:   74:            }
+    #####:   75:            else cout << "Object doesn't exist" << endl;
+    #####:   76:        };
+        -:   77:
+    #####:   78:        bool contains(const Object& obj) const{
+    #####:   79:            for(size_t i=0;i<cap;i++){
+    #####:   80:                if(list[i] == obj){
+    #####:   81:                    return true;
+        -:   82:                }
+        -:   83:            }
+    #####:   84:            return false;
+        -:   85:        };
+    #####:   86:        size_t size() const{
+    #####:   87:            return siz;
+        -:   88:        };
+        -:   89:
+    #####:   90:        ~Collection(){
+    #####:   91:            delete[] list;
+    #####:   92:            list = NULL;
+    #####:   93:            cap =0;
+    #####:   94:            siz =0;
+    #####:   95:        }
+        -:   96:
+        -:   97:        Collection(const Collection &obj):list(nullptr),siz(0),cap(0),empty(false){
+        -:   98:            cap = obj.cap;
+        -:   99:            siz = obj.siz;
+        -:  100:            empty = obj.empty;
+        -:  101:            list = new int[cap];
+        -:  102:            for(size_t i=0;i<siz;i++){
+        -:  103:                list[i] = obj.list[i];
+        -:  104:            }
+        -:  105:        }
+        -:  106:
+        -:  107:        Collection& operator=(const Collection &obj){
+        -:  108:            if(this == &obj){
+        -:  109:                return *this;
+        -:  110:            }
+        -:  111:            siz = obj.siz;
+        -:  112:            for(size_t i=0;i<siz;i++){
+        -:  113:                list[i] = obj.list[i];
+        -:  114:            }
+        -:  115:            return *this;
+        -:  116:        }
+        -:  117:};

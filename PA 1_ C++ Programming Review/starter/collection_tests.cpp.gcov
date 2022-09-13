@@ -1,0 +1,56 @@
+        -:    0:Source:collection_tests.cpp
+        -:    0:Graph:collection_tests.gcno
+        -:    0:Data:-
+        -:    0:Runs:0
+        -:    1:#include <iostream>
+        -:    2:#include "collection.h"
+        -:    3:using namespace std;
+        -:    4:
+    #####:    5:int main(){
+        -:    6:
+    #####:    7:	Collection<int> test;
+        -:    8:	//Collection<int> test1;
+        -:    9:	
+    #####:   10:	test.insert(1);
+    #####:   11:	test.insert(2);
+    #####:   12:	test.insert(3);
+    #####:   13:	test.insert(4);
+    #####:   14:	test.insert(5);
+    #####:   15:	test.insert(6);
+    #####:   16:	test.insert(7);
+    #####:   17:	test.insert(8);
+    #####:   18:	test.insert(9);
+    #####:   19:	test.insert(10);
+    #####:   20:	test.insert(11);
+    #####:   21:	test.insert(12);
+    #####:   22:	cout << test.is_empty() << endl;
+    #####:   23:	test.print();
+    #####:   24:	cout << endl;
+        -:   25:
+    #####:   26:	test.make_empty();
+    #####:   27:	test.insert(123);
+    #####:   28:	test.print();
+    #####:   29:	cout << endl;
+        -:   30:	//insert done
+        -:   31:
+    #####:   32:	test.make_empty();
+    #####:   33:	cout << test.is_empty()<<endl;
+    #####:   34:	test.make_empty();
+        -:   35:	//make_empty done
+        -:   36:	//is_empty done
+        -:   37:
+    #####:   38:	test.insert(1);
+    #####:   39:	test.insert(2);
+    #####:   40:	cout << test.contains(1) << endl;
+    #####:   41:	cout << test.contains(10) << endl;
+        -:   42:	//contains done
+        -:   43:
+    #####:   44:	cout << test.size() << endl;
+        -:   45:	//size done
+        -:   46:
+    #####:   47:	test.remove(2);
+        -:   48:	//test.remove(1);
+    #####:   49:	test.print();
+        -:   50:
+    #####:   51:	return 0;
+    #####:   52:}
