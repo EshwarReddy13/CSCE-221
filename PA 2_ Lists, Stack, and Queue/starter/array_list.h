@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 
@@ -12,15 +11,16 @@ class ArrayList {
     size_t siz;
     size_t cap;
     Object* list;
+    bool set_cap;
 
     public:
 
-    ArrayList():siz(0),cap(10),list(nullptr){list = new Object[cap];};
-    ArrayList(size_t capacity){
-        cap = capacity;
-        siz = 0;
-        list = nullptr;
-        list = new Object[cap];
+    ArrayList():siz(0),cap(1),list(nullptr),set_cap(false){list = new Object[cap];};
+    explicit ArrayList(size_t capacity):siz(0),cap(capacity),list(nullptr),set_cap(false){
+        list = new Object[capacity];
+        for(size_t i=0;i<cap;i++){
+            list[i] =0;
+        }
     };
 
     size_t size() const {
@@ -28,33 +28,66 @@ class ArrayList {
     }
 
     Object& operator[](size_t s){
-        if(s>siz-1){
+        if(s>=siz){
             throw std::out_of_range("Index out of bounds");
         }
         return list[s];
     }
 
-    void insert(size_t s,const Object& obj){
-        if(s>cap){
-            throw std::out_of_range("Index out of range");
+    void insert(size_t index,const Object& obj){
+        if(index>siz || (index==cap && set_cap)){
+            throw std::out_of_range("Index out of bounds");
         }
+        if(siz==cap && !set_cap){
+            cap*=2;
+        }   
+        if(index==0 && siz==0){
+            list[0] = obj;
+            siz++;
+            return;
+        }
+        // 1 2 3 4 5 0 0 0
+        // 1 2 3 8 4 5 0 0 
+        Object* temp = new Object[cap];
         for(size_t i=0;i<cap;i++){
-            if(i==s){
-                list[i] = obj;
+            if(index == i){
+                temp[i] = obj;
+            }else if(index > i){
+                temp[i] = list[i];
+            }else if(index < i){
+                if(i > siz){
+                    temp[i] = 0;
+                }else{
+                    temp[i] = list[i-1];
+                }
             }
         }
-        siz+=1;
+        delete[] list;
+        list = temp;
+        siz++;
+        return;
     }
 
     void remove(size_t index){
-        if(index>cap){
-            throw std::out_of_range("Index out of range");
+        if(index>=siz){
+            throw std::out_of_range("Index out of bounds");
         }
-        for(int i=0;i<cap;i++){
-            if(i==index){
-                list[i] = 0;
+        Object* temp = new Object[cap];
+        size_t j=0;
+        for(size_t i=0;i<cap;i++){
+            if(index == i){
+                i++;
             }
+            temp[j] = list[i];
+            j++;
         }
+        delete[] list;
+        list = temp;
+        siz--;
+    }
+
+    size_t capacity() const{
+        return cap;
     }
 
     void print(){
@@ -67,9 +100,12 @@ class ArrayList {
         delete[] list;
     }
 
-    ArrayList(const ArrayList& other):{list(nullptr),siz(other.siz),cap(other.cap){
-        list = new int[cap];
-        for(int i=0;i<siz;i++){
+    ArrayList(const ArrayList& other){
+        siz = other.siz;
+        cap = other.cap;
+        set_cap = other.set_cap;
+        list = new Object[other.cap];
+        for(size_t i=0;i<cap;i++){
             list[i] = other.list[i];
         }
     }
@@ -79,21 +115,12 @@ class ArrayList {
             delete[] list;
             siz = other.siz;
             cap = other.cap;
-            list = new Object[cap];
-            for(int i=0;i<siz;i++){
+            set_cap = other.set_cap;
+            list = new Object[other.cap];
+            for(size_t i=0;i<cap;i++){
                 list[i] = other.list[i];
             }
         }
         return *this;
     }
 };
-
-// class Fox(){
-//     int* a;
-//     fox(){a = new int();}
-// }
-
-// class s(){
-//     Fox* f;
-
-// }
