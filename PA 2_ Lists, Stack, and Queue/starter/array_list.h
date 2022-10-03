@@ -1,8 +1,7 @@
 #include <iostream>
 using namespace std;
 
-#include <cstddef>
-#include <stdexcept>
+
 template <typename Object>
 class ArrayList {
     // TODO(student): implement ArrayList
@@ -15,13 +14,40 @@ class ArrayList {
 
     public:
 
-    ArrayList():siz(0),cap(1),list(nullptr),set_cap(false){list = new Object[cap];};
+    ArrayList():siz(0),cap(1),list(nullptr),set_cap(false){
+        list = new Object[cap];
+    }
     explicit ArrayList(size_t capacity):siz(0),cap(capacity),list(nullptr),set_cap(false){
         list = new Object[capacity];
+    }
+
+    ~ArrayList(){
+        delete[] list;
+    }
+
+    ArrayList(const ArrayList& other):siz(0),cap(0),list(nullptr),set_cap(false){
+        siz = other.siz;
+        cap = other.cap;
+        set_cap = other.set_cap;
+        list = new Object[other.cap];
         for(size_t i=0;i<cap;i++){
-            list[i] =0;
+            list[i] = other.list[i];
         }
-    };
+    }
+
+    ArrayList& operator=(const ArrayList& other){
+        if(this != &other){
+            delete[] list;
+            siz = other.siz;
+            cap = other.cap;
+            set_cap = other.set_cap;
+            list = new Object[other.cap];
+            for(size_t i=0;i<cap;i++){
+                list[i] = other.list[i];
+            }
+        }
+        return *this;
+    }
 
     size_t size() const {
         return siz;
@@ -55,17 +81,15 @@ class ArrayList {
             }else if(index > i){
                 temp[i] = list[i];
             }else if(index < i){
-                if(i > siz){
-                    temp[i] = 0;
-                }else{
-                    temp[i] = list[i-1];
+                if(i>siz){
+                    break;
                 }
+                temp[i] = list[i-1];
             }
         }
         delete[] list;
         list = temp;
         siz++;
-        return;
     }
 
     void remove(size_t index){
@@ -86,41 +110,9 @@ class ArrayList {
         siz--;
     }
 
-    size_t capacity() const{
-        return cap;
-    }
-
     void print(){
-        for(size_t i=0;i<cap;i++){
+        for(size_t i=0;i<siz;i++){
             cout << list[i] << " ";
         }
-    }
-
-    ~ArrayList(){
-        delete[] list;
-    }
-
-    ArrayList(const ArrayList& other){
-        siz = other.siz;
-        cap = other.cap;
-        set_cap = other.set_cap;
-        list = new Object[other.cap];
-        for(size_t i=0;i<cap;i++){
-            list[i] = other.list[i];
-        }
-    }
-
-    ArrayList& operator=(const ArrayList& other){
-        if(this != &other){
-            delete[] list;
-            siz = other.siz;
-            cap = other.cap;
-            set_cap = other.set_cap;
-            list = new Object[other.cap];
-            for(size_t i=0;i<cap;i++){
-                list[i] = other.list[i];
-            }
-        }
-        return *this;
     }
 };

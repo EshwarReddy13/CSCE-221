@@ -1,6 +1,18 @@
 #include <iostream>
 #include "array_list.h"
 
+void time(){
+    ArrayList<char> ctest;
+    ctest.insert(0,'a');
+    ctest.insert(1,'b');
+    ctest.insert(2,'c');
+    ctest.print();
+    cout << endl;
+    ctest.remove(0);
+    ctest.print();
+    return;
+}
+
 void testinsert(){
     ArrayList<int> test;
     test.insert(0,1);
@@ -12,7 +24,7 @@ void testinsert(){
     test.insert(6,7);
     test.insert(7,8);
     test.insert(8,10);
-    
+    cout << endl;
     try{test.insert(10,10);}catch(std::out_of_range const&){};
     test.print();cout << endl;
 
@@ -34,13 +46,14 @@ void testremove(){
     test2.insert(4,5);
     cout << endl;
     test2.print();
-    cout << endl;
     test2.remove(3);
+    cout << endl;
     test2.print();
     return;
 }
 
 int main() {
+    time();
     testinsert();
     testremove();
     return 0;
