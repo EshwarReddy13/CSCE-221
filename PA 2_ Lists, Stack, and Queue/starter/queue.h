@@ -31,7 +31,7 @@ class Queue {
             for(size_t i=0;i<sz;i++){
                 que[i] = rhs.que[i];
             }
-        }
+        } 
         return *this;
     }
 
@@ -41,16 +41,24 @@ class Queue {
             delete[] que;
             que = new Object[sz];
             que[0] = obj;
-            return;
+            return; 
         }
         sz++;
         Object* temp = new Object[sz];
+        // temp[0] = obj;
+        // size_t j=0;
+        // for(size_t i=1;i<sz;i++){
+        //     temp[i] = que[j];
+        //     j++;
+        // }
+        // delete[] que;
+        // que = temp;
         for(size_t i = 0; i < sz-1; i++){
             temp[i] = que[i];
         }
+        temp[sz-1] = obj;
         delete[] que;
         que = temp;
-        que[sz-1] = obj;
     }
 
     Object& front(){
