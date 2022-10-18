@@ -23,10 +23,11 @@ class DoublyLinkedList {
     DoublyLinkedList():sz(0),head(nullptr),tail(nullptr){};
     
     ~DoublyLinkedList(){
-        while(head!=nullptr){
-            Node<Object>* temp = head;
-            head = head->next;
+        Node<Object>* temp = head;
+        while (temp){
+            Node* next = temp->next;
             delete temp;
+            temp = next;
         }
         head = nullptr;
         tail = nullptr;
@@ -41,7 +42,6 @@ class DoublyLinkedList {
         }
         else{
             size_t i = 0;
-            sz = i;
             Node<Object>* temp = other.head;
             while(temp){
                 insert(i, temp->val);
@@ -50,77 +50,21 @@ class DoublyLinkedList {
             } 
         }
     }
-    //    if(rhs.head == nullptr){
-    //         return;
-    //     }
-    //     else{
-    //         size_t i = 0;
-    //         sz = rhs.sz;
-    //         Node<Object>* temp = rhs.head;
-    //         tail = rhs.tail;
-    //         while(temp!=nullptr){
-    //             insert(i, temp->val);
-    //             temp = temp->next;
-    //             i++;
-    //         }     
-    //     }
-        // if(rhs.head == nullptr){
-        //     head = nullptr;
-        //     tail = nullptr;
-        //     sz=0;
-        //     return;
-        // }
-        // // 1 2 3
-        // sz = rhs.sz;
-        // //head = new Node<Object>{rhs.head->val,nullptr,nullptr};
-        // tail = rhs.tail;
-        // tail->prev = rhs.tail->prev;
-        // Node<Object>* temp = rhs.head;
-        // size_t i=0;
-        // while(temp!=nullptr){
-        //     insert(i, temp->val);
-        //     temp = temp->next;
-        //     i++;
-        // }
-        // //tail->prev = rhs.tail->prev;
-        // // temp = rhs.tail->prev;
-        // // curr = tail;
-        // // while(temp!=nullptr){
-        // //     Node<Object>* add = new Node<Object>{temp->val,nullptr,nullptr};
-        // //     add->prev = nullptr;
-        // //     add->next = curr;
-        // //     curr->prev = add;
-        // //     temp = temp->prev;
-        // //     curr = curr->prev;
-        // // }
-        // delete temp;
 
     DoublyLinkedList& operator=(const DoublyLinkedList& rhs){
+        if(this!=&rhs){
+            size_t i =0;
+            Node<Object>* temp = rhs.head;
+            while(temp){
+                insert(i,temp->val);
+                temp = temp->next;
+                i++;
+            }
+        }
         return *this;
     }
     size_t size() const{
         return sz;
-    }
-
-    void make(){
-        Node<Object>* my1 = new Node<Object>;
-        Node<Object>* my2 = new Node<Object>;
-        Node<Object>* my3 = new Node<Object>;
-        Node<Object>* my4 = new Node<Object>;
-        Node<Object>* my5 = new Node<Object>;
-        my1->val = 1;
-        my2->val = 2;
-        my3->val = 3;
-        my4->val = 4;
-        my5->val = 5;
-        head = my1;
-        head->next = my2;
-        head->next->next = my3;
-        head->next->next->next = my4;
-        head->next->next->next->next = my5;
-        tail = my5;
-        tail->next =nullptr;
-        sz=5;
     }
 
     Object& operator[](size_t index){

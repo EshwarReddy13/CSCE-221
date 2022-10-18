@@ -1,3 +1,5 @@
-p = 10.6
-f = int(10.6)
-print(f)
+a = "hello world whoop"
+a = a + "esh"
+
+print(a)
+#a[1:l
