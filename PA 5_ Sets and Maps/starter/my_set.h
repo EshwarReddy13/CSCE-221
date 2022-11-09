@@ -8,10 +8,13 @@ template <class T> class Set_iterator;
 // TODO(student): implement this
 template <class Comparable>
 class Set_Node {
+
+    int val;
+    
+
     friend class Set<Comparable>;
     friend class Set_const_iterator<Comparable>;
     friend class Set_iterator<Comparable>;
-
     // TODO(student): implement this
 };
 
@@ -53,6 +56,8 @@ class Set {
     typedef Set_iterator<Comparable> iterator;
 
 };
+
+
 
 template <class Comparable>
 std::ostream& operator<<(std::ostream& os, const Set_const_iterator<Comparable>& iter) {

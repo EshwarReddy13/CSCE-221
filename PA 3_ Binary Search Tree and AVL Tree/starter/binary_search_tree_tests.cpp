@@ -3,6 +3,7 @@
 using std::cout, std::endl;
 
 void testinsert(){
+    std::cout << "Insert:" << std::endl;
     BinarySearchTree<int> test;
     test.insert(10);
     test.insert(10);
@@ -10,11 +11,12 @@ void testinsert(){
     test.insert(12);
     test.insert(8);
     test.insert(8);
-    test.print_tree();
+    test.print();
     std::cout << std::endl;
 }
 
 void testmin(){
+    std::cout << "Find_min:" << std::endl;
     BinarySearchTree<int> test1;
     try{test1.find_min();}catch(std::invalid_argument const&){}
     test1.insert(10);
@@ -26,6 +28,7 @@ void testmin(){
 }
 
 void testmax(){
+    std::cout << "Find_max:" << std::endl;
     BinarySearchTree<int> test2;
     try{test2.find_max();}catch(std::invalid_argument const&){}
     test2.insert(10);
@@ -37,20 +40,22 @@ void testmax(){
 }
 
 void testprint(){
+    std::cout << "Print:" << std::endl;
     BinarySearchTree<int> test3;
-    test3.insert(10);
-    test3.insert(3);
-    test3.insert(12);
-    test3.insert(8);
-    test3.insert(9);
-    test3.insert(15);
-    test3.insert(1);
-    test3.insert(2);
     test3.print_tree();
+    test3.insert(6);
+    test3.insert(4);
+    test3.insert(2);
+    test3.insert(8);
+    test3.insert(10);
+    //test3.print_tree();
     std::cout << std::endl;
+    test3.remove(6);
+    test3.print_tree();std::cout << std::endl;
 }
 
 void testcontains(){
+    std::cout << "Contains:" << std::endl;
     BinarySearchTree<int> test4;
     test4.insert(10);
     test4.insert(12);
@@ -61,22 +66,49 @@ void testcontains(){
 }
 
 void testrule(){
+    std::cout << "Rule of three:" << std::endl;
     BinarySearchTree<int> test5;
     test5.insert(10);
     test5.insert(12);
     test5.insert(8);
-    BinarySearchTree<int> test6(test5);
-    test6.print_tree();
+    test5.print();std::cout << std::endl;
+    BinarySearchTree<int> test6 = test5;
+    test6.print();
     std::cout << std::endl;
+    test6.insert(25);
+    BinarySearchTree<int> testt(test6);
+    testt.print();std::cout << std::endl;
 }
 
+void testremove(){
+    std::cout << "Remove:" << std::endl;
+    BinarySearchTree<int> test6;
+    test6.insert(10);   
+    test6.insert(20);
+    test6.insert(15);
+    test6.insert(25);
+    test6.insert(5);
+    test6.insert(4);
+    test6.insert(6);
+    test6.print();std::cout << std::endl;
+    test6.remove(10);
+    test6.print(); 
+    test6.remove(15);
+    std::cout << std::endl;
+    test6.print();
+}
+/*   15
+   5   20
+  4 6   25
+*/
 int main() {
-    // TODO(student): write tests
-    testinsert();
-    testmin();
-    testmax();
+    // // TODO(student): write tests
+    // testinsert();
+    // testmin();
+    // testmax();
     testprint();
-    testcontains();
-    //testrule();
+    // testcontains();
+    // testrule();
+    // testremove();
     return 0;
 }
